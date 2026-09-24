@@ -2,53 +2,85 @@
 
 A streamlined, data-driven Streamlit dashboard designed to identify underperforming customer support agents for retraining, calculate SLA breaches, and estimate the business cost of unnecessary product replacements.
 
-## 🚀 Quickstart
+## 🛠️ HOW TO RUN THE PROJECT (Step-by-Step)
 
-1. **Install Dependencies:**
+Follow these exact steps to run the dashboard on a clean machine:
+
+1. **Clone or Download the Repository:**
+   Ensure your terminal is in the project root folder.
+
+2. **Create a Virtual Environment (Recommended):**
+   `ash
+   python -m venv venv
+   
+   # On Windows:
+   venv\\Scripts\\activate
+   
+   # On Mac/Linux:
+   source venv/bin/activate
+   `
+
+3. **Install the Required Packages:**
    `ash
    pip install -r requirements.txt
    `
-2. **Add API Key (Optional but Recommended):**
-   Copy .env.example to .env and add your free Groq API key for AI-powered insights.
-   `ash
-   GROQ_API_KEY=your_key_here
-   `
-3. **Run the Dashboard:**
+
+4. **Configure the API Key (Required for AI Insights):**
+   - Go to https://console.groq.com/keys to get a free API key.
+   - In the project root, create a file named exactly .env
+   - Add this single line to the file:
+     GROQ_API_KEY=your_actual_api_key_here
+
+5. **Start the Dashboard:**
    `ash
    streamlit run app.py
    `
+   *The dashboard will automatically open in your web browser at http://localhost:8501*
 
-## 📊 Core Methodology
+---
 
-*   **CSAT Calculation:** Excludes blank scores (per Policy §8).
+## 📊 Analytical Methodology
+
+### CSAT & Handle Time
+*   **CSAT:** Excludes blank scores (per Policy §8).
 *   **Handle Time:** Measures irst_response_at to 
 esolved_at. **Crucial Fix:** Legacy UTC timestamps were converted to IST (+5:30), eliminating 2,309 impossible negative handle times.
-*   **Bottom-10 Ranking:** 60% CSAT Percentile + 40% Handle Time Percentile. 
-    *   *Exclusions:* Tier 2 agents (Escalations/Warranty) are excluded from volume metric comparisons (per Policy §6). Agents with <10 reviews are excluded for statistical relevance.
-*   **Queue Bias Warning:** 8 of the 10 flagged agents are in Logistics/Returns. These queues inherently receive the hardest cases, so scores reflect queue difficulty, not just skill.
+
+### Bottom-10 Methodology
+**Composite score = 60% CSAT percentile + 40% Handle Time percentile (inverted)**
+
+**Exclusions:**
+*   **Tier 2 agents (Escalations & Warranty):** Policy section 6 explicitly states Tier 2 agents handle multi-touch cases and are not to be compared with Tier 1 on volume metrics.
+*   **Agents with <10 reviews:** Excluded for statistical stability.
+
+**Queue Bias Caveat:** 
+8 of the 10 flagged agents are in Logistics and Returns Desk. They're the bottom 10 under the defined performance metric, but I wouldn't interpret that as proof that they're individually the worst performers. Eight are in Logistics and Returns, where the case mix is inherently more difficult. I'd use this list as a retraining review cohort rather than as a punitive ranking.
 
 ## 🤖 AI Integration
 
-We use **Groq (GPT OSS 120B)** for rapid, cost-free unstructured text analysis.
+We use the **Groq API with GPT-OSS 120B model** for rapid, cost-free unstructured text analysis.
 *   **What it does:** Extracts themes, sentiment, and training gaps from bottom-10 agent tickets.
-*   **What it DOES NOT do:** All financial, CSAT, and ranking metrics are strictly deterministic (Pandas). No numbers are hallucinated.
+*   **What it DOES NOT do:** All financial, CSAT, and ranking metrics are strictly deterministic (Pandas).
 *   **Fallback:** If the API key is missing or rate-limited, a local rule-based keyword matcher runs instead.
 
 ## 💰 Business Impact Goal
 
 *   **Objective:** Reduce the massive post-festive spike in product replacement rates (from 9.6% baseline to 22.1%).
 *   **Financial Impact:** Returning to the baseline saves ~**₹8.5 Lakh quarterly**.
-*   *(Note: Replacement cost calculated exactly as Unit Cost + ₹340 logistics, overriding the incorrect ₹2,500 estimate in the email thread).*
+*   **Replacement Cost Formula:** Unit Cost + ₹340 logistics (overriding the incorrect ₹2,500 estimate in the email thread based on Policy §5).
 
-## 🧪 Testing
+## 🧪 Validation & Evaluation
 
-Run pytest tests/test_metrics.py to execute the 8-test validation suite verifying:
-*   Timezone fixes (0 negative handle times).
-*   Correct Tier-2 exclusions.
-*   Deterministic SLA breach counts.
-*   Perfect ticket aggregation sums.
+**Deterministic Analytics (	ests/test_metrics.py):**
+8 tests covering data loading, negative handle times, CSAT range, blank CSAT handling, aggregation, bottom-10 exclusions, SLA logic, and CSAT spot checks.
 
-## 📝 What Was Intentionally Left Out
+**AI Classification:**
+The keyword fallback has limited accuracy on informal and misspelled text. The LLM path is intended to provide more context-aware classification, but its accuracy was not independently benchmarked in this evaluation.
 
-*   **orders.csv (Lot Codes):** Finance requested lot codes, but the primary mandate was an *agent retraining* dashboard. Deep-diving into manufacturing defects was deemed out of scope.
-*   **customers.csv (Demographics):** Irrelevant to individual agent performance metrics.
+## ⚠️ Limitations & Scope Decisions
+
+### What Was Intentionally Left Out
+*   **Per-product / Lot-code Analysis (orders.csv):** Finance requested lot codes, but the primary mandate was an *agent retraining* dashboard. Deep-diving into manufacturing defects was deemed out of scope.
+*   **Customer Segmentation (customers.csv):** Irrelevant to individual agent performance metrics.
+*   **Cloud Deployment:** Cloud deployment was intentionally left out to stay within the assignment scope.
+*   **Authentication & Live Monitoring:** This is a batch analytics tool designed for take-home assessment constraints.

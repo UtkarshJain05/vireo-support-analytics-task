@@ -8,7 +8,7 @@
 
 ## 1. What does your tool do?
 
-A Streamlit dashboard that analyzes 11,750 support tickets from Vireo Audio's helpdesk (Jan 2025 to Jun 2026). It computes CSAT and handle time per agent, flags the bottom 10 Tier 1 agents for review using a weighted composite score (60% CSAT + 40% handle time), uses Google Gemini to classify ticket themes and identify retraining areas, and quantifies a business goal: reducing the replacement rate from 22% to the pre-festive baseline of ~10%, worth approximately Rs 8.5 lakh per quarter in cost avoidance.
+A Streamlit dashboard that analyzes 11,750 support tickets from Vireo Audio's helpdesk (Jan 2025 to Jun 2026). It computes CSAT and handle time per agent, flags the bottom 10 Tier 1 agents for review using a weighted composite score (60% CSAT + 40% handle time), uses Groq API with GPT-OSS 120B model to classify ticket themes and identify retraining areas, and quantifies a business goal: reducing the replacement rate from 22% to the pre-festive baseline of ~10%, worth approximately Rs 8.5 lakh per quarter in cost avoidance.
 
 ## 2. What is the business goal, stated as a number?
 
@@ -26,19 +26,19 @@ Reduce the replacement rate from 22.1% (post-festive, Jan-Jun 2026) to the pre-f
 - Pandas (data manipulation, all deterministic metrics)
 - Streamlit (dashboard UI)
 - Plotly (charts)
-- Google Gemini 2.0 Flash (ticket classification and theme analysis, optional)
+- Groq API with GPT-OSS 120B model (ticket classification and theme analysis, optional)
 - SciPy (statistical functions)
 - python-dotenv (environment variable management)
 
 ## 5. What AI tools did you use during development?
 
 - Google Antigravity (Claude) as a coding assistant for implementation, analysis, and code generation
-- Google Gemini 2.0 Flash within the application itself for ticket classification
+- Groq API with GPT-OSS 120B model within the application itself for ticket classification
 
 ## 6. What did the AI tools cost?
 
 - Antigravity: included in existing subscription
-- Gemini 2.0 Flash API: well under $0.01 for the ~100-ticket classification used during development (free tier)
+- Groq API: well under $0.01 for the ~100-ticket classification used during development (free tier)
 
 ## 7. What did you discard or decide not to build?
 
