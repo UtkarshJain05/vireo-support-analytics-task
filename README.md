@@ -10,31 +10,31 @@ Follow these exact steps to run the dashboard on a clean machine:
    Ensure your terminal is in the project root folder.
 
 2. **Create a Virtual Environment (Recommended):**
-   `ash
+   ```bash
    python -m venv venv
    
    # On Windows:
-   venv\\Scripts\\activate
+   venv\Scripts\activate
    
    # On Mac/Linux:
    source venv/bin/activate
-   `
+   ```
 
 3. **Install the Required Packages:**
-   `ash
+   ```bash
    pip install -r requirements.txt
-   `
+   ```
 
 4. **Configure the API Key (Required for AI Insights):**
    - Go to https://console.groq.com/keys to get a free API key.
-   - In the project root, create a file named exactly .env
+   - In the project root, create a file named exactly `.env`
    - Add this single line to the file:
-     GROQ_API_KEY=your_actual_api_key_here
+     `GROQ_API_KEY=your_actual_api_key_here`
 
 5. **Start the Dashboard:**
-   `ash
+   ```bash
    streamlit run app.py
-   `
+   ```
    *The dashboard will automatically open in your web browser at http://localhost:8501*
 
 ---
@@ -43,8 +43,7 @@ Follow these exact steps to run the dashboard on a clean machine:
 
 ### CSAT & Handle Time
 *   **CSAT:** Excludes blank scores (per Policy §8).
-*   **Handle Time:** Measures irst_response_at to 
-esolved_at. **Crucial Fix:** Legacy UTC timestamps were converted to IST (+5:30), eliminating 2,309 impossible negative handle times.
+*   **Handle Time:** Measures `first_response_at` to `resolved_at`. **Crucial Fix:** Legacy UTC timestamps were converted to IST (+5:30), eliminating 2,309 impossible negative handle times.
 
 ### Bottom-10 Methodology
 **Composite score = 60% CSAT percentile + 40% Handle Time percentile (inverted)**
@@ -71,7 +70,7 @@ We use the **Groq API with GPT-OSS 120B model** for rapid, cost-free unstructure
 
 ## 🧪 Validation & Evaluation
 
-**Deterministic Analytics (	ests/test_metrics.py):**
+**Deterministic Analytics (`tests/test_metrics.py`):**
 8 tests covering data loading, negative handle times, CSAT range, blank CSAT handling, aggregation, bottom-10 exclusions, SLA logic, and CSAT spot checks.
 
 **AI Classification:**
@@ -80,7 +79,7 @@ The keyword fallback has limited accuracy on informal and misspelled text. The L
 ## ⚠️ Limitations & Scope Decisions
 
 ### What Was Intentionally Left Out
-*   **Per-product / Lot-code Analysis (orders.csv):** Finance requested lot codes, but the primary mandate was an *agent retraining* dashboard. Deep-diving into manufacturing defects was deemed out of scope.
-*   **Customer Segmentation (customers.csv):** Irrelevant to individual agent performance metrics.
+*   **Per-product / Lot-code Analysis (`orders.csv`):** Finance requested lot codes, but the primary mandate was an *agent retraining* dashboard. Deep-diving into manufacturing defects was deemed out of scope.
+*   **Customer Segmentation (`customers.csv`):** Irrelevant to individual agent performance metrics.
 *   **Cloud Deployment:** Cloud deployment was intentionally left out to stay within the assignment scope.
 *   **Authentication & Live Monitoring:** This is a batch analytics tool designed for take-home assessment constraints.
