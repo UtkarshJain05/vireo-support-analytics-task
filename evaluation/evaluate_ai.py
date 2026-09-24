@@ -110,7 +110,7 @@ if __name__ == "__main__":
             sent_mark = "OK" if d["sentiment_match"] else "X"
             print(f"   {d['ticket_id']}: category {cat_mark} (exp={d['expected_category']}, pred={d['predicted_category']}), sentiment {sent_mark} (exp={d['expected_sentiment']}, pred={d['predicted_sentiment']})")
 
-    print("\n2. Evaluating AI (Gemini) classification:")
+    print("\n2. Evaluating AI (Groq) classification:")
     ai_results = evaluate_classification(tickets, "ai")
     if ai_results:
         print(f"   Category accuracy: {ai_results['category_accuracy']*100:.1f}% ({ai_results['category_matches']}/{ai_results['sample_size']})")
