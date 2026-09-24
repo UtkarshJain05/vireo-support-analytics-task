@@ -1,0 +1,15 @@
+sku,product_name,family,launch_date,unit_cost_inr,retail_price_inr,warranty_months
+VA-EB-PL2,Pulse 2 True Wireless Earbuds,earbuds,2025-07-15,1480,3499,12
+VA-EB-PL1,Pulse True Wireless Earbuds,earbuds,2024-03-01,1120,2499,12
+VA-EB-AIR,AirLite Earbuds,earbuds,2024-09-10,760,1799,12
+VA-HP-ST3,Strata 3 Over-Ear Headphones,headphones,2024-11-20,2650,6999,12
+VA-HP-ST2,Strata 2 Over-Ear Headphones,headphones,2023-10-01,2100,4999,12
+VA-SP-ORB,Orbit Smart Speaker,speaker,2024-06-05,2300,5999,12
+VA-SP-MINI,Orbit Mini Speaker,speaker,2025-02-14,980,2499,12
+VA-SW-NX2,Nexa 2 Smartwatch,watch,2025-01-20,2450,6499,12
+VA-SW-NX1,Nexa Smartwatch,watch,2023-12-05,1900,4999,12
+VA-SW-FIT,Nexa Fit Band,watch,2024-08-01,850,1999,12
+VA-NB-ARC,Arc Neckband,earbuds,2024-05-12,540,1299,12
+VA-AC-CH65,65W GaN Charger,accessory,2024-04-01,610,1499,6
+VA-AC-CBL,USB-C Braided Cable,accessory,2024-04-01,90,399,6
+VA-AC-CASE,Pulse Charging Case (spare),accessory,2025-08-01,620,1299,6
